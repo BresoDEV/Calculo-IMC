@@ -1,0 +1,300 @@
+<!-- Created by YostDev -->
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>IMC calculator</title>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <style>
+        body {
+            background:#222;
+            user-select: none;
+            font-family: Roboto;
+            font-size: 30px;
+        }
+        .cont {
+            display: flex;
+            justify-content: space-around;
+            padding: 5px;
+        }
+        .cont div{
+            background: #333;
+            width: 40%; display: flex;
+            justify-content:center;
+            align-items: center;
+            flex-direction: column;
+            color: #F2F2F2; 
+            height: 150px;
+            padding: 5px;
+            border-radius: 5px;
+            transition: 0.2s;
+            font-family: Roboto;
+            animation: blop 1s ease-out;
+        }.cont div i {
+            font-size:30px;
+        }
+        .altu {
+            background: #333;
+            width: 79.8%;
+            border-radius: 5px;
+            margin: 20px auto; 
+            color: #F2F2F2;
+            text-align: center; 
+            animation: blop 1.3s ease-out;
+        }
+        #rang {
+            background: #000;
+            width: 80%;
+            -webkit-appearance: none;
+            height: 4px;
+        }
+        input[type="range"]::-webkit-slider-thumb
+{
+    -webkit-appearance: none;
+    background:#D64545;
+    height:15px;
+    width:15px;
+    border-radius: 50%;
+}
+
+
+.entrada {
+    width: 50%;
+    height: 40px;
+    background: none;
+    border: none;
+    color: #F2F2F2;
+    font-size: 30px;
+    border-bottom: 2px solid white; 
+   
+}
+.entrada:focus{
+    outline: none;
+}
+
+button {
+    background: #D64545;
+    padding: 5px; color: #F2F2F2;
+    margin: 20px auto;
+    border: none;
+    border: 2px solid #D64545;
+    padding: 10px;
+    border-radius: 5px;
+    width: calc(86% + 5px);
+    font-family: Roboto;
+    transition: 0.3s;
+    animation: blop 1.5s ease-out;
+}
+button:active{
+    background: none;
+    color: #D64545;
+}
+.centrar{
+    text-align: center;
+}
+#circulo{
+    margin: 20px auto;
+    width: 200px; height: 200px;
+    border: 6px solid #666;
+    border-radius: 50%;
+    color: #F2F2F2; display: flex;
+    justify-content: center;
+    transition: 0.3s;
+    align-items: center;
+}
+#sobrepeso{
+    color: #F2F2F2; text-align: center;
+}
+
+.menu {
+    display: flex; position: fixed; 
+    align-items: center;
+    left: 0; top: 0; padding: 15px;
+    width: 100%; gap: 15px;
+    font-size: 30px; color: #F2F2F2;
+    background: #1212128b;
+    height: 40px; transition: 0.4s;
+    backdrop-filter: blur(5px);  
+    animation: menap 1s ease-out 0.1s;
+}
+.nomore {
+    color: #2C2C2C;
+    font-size: 30px;
+    text-align: center;
+}
+
+/* animaciones */
+
+@keyframes menap {
+    0%{top: -80px;}
+    100%{top: 0px;}
+}
+@keyframes blop {
+    0%{transform: scale(0.0);}
+    80%{transform: scale(1.1);}
+    100%{transform: scale(1.0);}
+}
+
+.ct{
+    margin-left: 10%;
+    width: 80%;
+}
+
+    </style>
+</head>
+<body>
+    <!-- Espacios para el menu -->
+    <br><br><br>
+    
+    <!-- Menu spam -->
+    <div class="menu">
+        <h4> BresoDEV IMC </h4>
+        <br>
+        <h4 style="color: transparent;">
+           little filling
+        </h4>
+     
+    </div>
+    
+    <!-- Genero -->
+    <div class="ct">
+        <div class="cont">
+            <div onclick="secmale()" id="male">
+               <br>
+               <i class="fas fa-male"></i>
+               <p>Masculino</p>
+            </div>
+            <div onclick="secfemale()" id="female">
+               <br>
+               <i class="fas fa-female"></i>
+               <p>Feminino</p>
+            </div>
+        </div>
+        
+        <!-- altura -->
+        <div class="altu">
+            <h4>Altura</h4>
+            <h2 id="contador">
+               192cm
+            </h2>
+            <input type="range" id="rang" max="300">
+        </div>
+        
+        
+        <!-- peso y edad -->
+        <div class="cont">
+            <div>
+               <h4>
+                   Peso (kg)
+               </h4>
+               <input type="number" id="peso" class="entrada">
+               <br>
+            </div>
+            <div>
+               <h4>
+                   Idade
+               </h4>
+               <input type="number" id="edad" class="entrada">
+               <br>
+            </div>
+        </div>
+        
+        <!-- Boton de calcular -->
+        <div class="centrar" onclick="calcular()">
+            <button>
+               Calcular
+            </button>
+        </div>
+        <!-- BMI resultado -->
+        <div id="circulo">
+            <h2 id="bmitotal">
+                0.0
+            </h2>
+        </div>
+        <h3 id="sobrepeso">
+            Normal
+        </h3>
+        <br>
+        <br>
+        <p class="nomore">
+            There is nothing else :(
+        </p>
+        <br>
+    </div>
+    <script>
+    
+    //rango de altura
+    
+        var rango = document.getElementById("rang");
+        var contador = document.getElementById("contador");
+        
+        rango.addEventListener('input', () => {
+            contador.textContent = `${rango.value}cm`
+        })
+    
+    //seleccion de genero
+    
+    var genero = 0;
+    var female = document.getElementById("female");
+    var male = document.getElementById("male");
+    
+    function secmale(){
+        female.style.background ="#2C2C2C";
+        male.style.background = "#464646";
+        genero = 0;
+    }
+    function secfemale(){
+        male.style.background ="#2C2C2C";
+        female.style.background = "#464646";
+        genero = 1;
+    }
+    secmale();
+    
+    
+    //obtener edad y peso
+    var edad = document.getElementById("edad");
+    var peso = document.getElementById("peso");
+    
+    
+    //calcular el BMI
+    
+    var BMI = 0.0;
+    var bmitotal = document.getElementById("bmitotal");
+    var sobrepeso = document.getElementById("sobrepeso");
+    var circulo = document.getElementById("circulo");
+    
+    function calcular(){
+        if(genero == 0){
+            BMI =  peso.value / Math.pow(rango.value / 100, 2);
+            BMI = BMI.toFixed(2);
+            
+            bmitotal.textContent = `${BMI}`;
+            
+        } else {
+            BMI =  peso.value / Math.pow(rango.value / 100, 2);
+            BMI += 0.5;
+            BMI = BMI.toFixed(2);
+            
+            bmitotal.textContent = `${BMI}`;
+            
+        }
+        
+        if (BMI < 18.5) {
+          sobrepeso.textContent = "Abaixo do Peso";
+          circulo.style.border = "4px solid #ff895594";
+        } else if (BMI >= 18.5 && BMI < 24.9) {
+          sobrepeso.textContent = "Peso Normal";
+          circulo.style.border = "4px solid #c4ff6a94";
+        } else if (BMI >= 25 && BMI < 29.9) {
+          sobrepeso.textContent = "Sobrepeso";
+          circulo.style.border = "4px solid #ff694094";
+        } else {
+          sobrepeso.textContent = "Obeso";
+          circulo.style.border = "4px solid #ff000a94";
+        }
+    }
+        
+    </script>
+</body>
+</html>
