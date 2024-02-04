@@ -1,10 +1,12 @@
-<!-- Created by YostDev -->
+
 
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
     <title>IMC calculator</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="preconnect" href="https://fonts.googleapis.com">
      <style>
         body {
@@ -25,7 +27,8 @@
             align-items: center;
             flex-direction: column;
             color: #F2F2F2; 
-            height: 150px;
+            min-height: 50px;
+            max-height: 150px;
             padding: 5px;
             border-radius: 5px;
             transition: 0.2s;
@@ -46,12 +49,10 @@
         #rang {
             background: #000;
             width: 80%;
-            -webkit-appearance: none;
             height: 4px;
         }
         input[type="range"]::-webkit-slider-thumb
 {
-    -webkit-appearance: none;
     background:#D64545;
     height:15px;
     width:15px;
@@ -95,7 +96,7 @@ button:active{
 }
 #circulo{
     margin: 20px auto;
-    width: 200px; height: 200px;
+    width: 100px; height: 100px;
     border: 6px solid #666;
     border-radius: 50%;
     color: #F2F2F2; display: flex;
@@ -122,6 +123,9 @@ button:active{
     color: #2C2C2C;
     font-size: 30px;
     text-align: center;
+}
+p,h4,h2{
+    font-size: medium;
 }
 
 /* animaciones */
@@ -161,12 +165,10 @@ button:active{
     <div class="ct">
         <div class="cont">
             <div onclick="secmale()" id="male">
-               <br>
                <i class="fas fa-male"></i>
                <p>Masculino</p>
             </div>
             <div onclick="secfemale()" id="female">
-               <br>
                <i class="fas fa-female"></i>
                <p>Feminino</p>
             </div>
@@ -185,18 +187,19 @@ button:active{
         <!-- peso y edad -->
         <div class="cont">
             <div>
+                
                <h4>
                    Peso (kg)
                </h4>
                <input type="number" id="peso" class="entrada">
-               <br>
+               
             </div>
             <div>
                <h4>
                    Idade
                </h4>
                <input type="number" id="edad" class="entrada">
-               <br>
+               
             </div>
         </div>
         
@@ -241,12 +244,12 @@ button:active{
     
     function secmale(){
         female.style.background ="#2C2C2C";
-        male.style.background = "#464646";
+        male.style.background = "rgb(100 200 100)";
         genero = 0;
     }
     function secfemale(){
         male.style.background ="#2C2C2C";
-        female.style.background = "#464646";
+        female.style.background = "rgb(100 200 100)";
         genero = 1;
     }
     secmale();
